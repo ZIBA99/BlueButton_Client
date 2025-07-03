@@ -18,21 +18,27 @@
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QLabel" name="label_2">
         <property name="minimumSize">
          <size>
-          <width>100</width>
+          <width>50</width>
           <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>100</width>
+          <width>50</width>
           <height>30</height>
          </size>
         </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::Box</enum>
+        </property>
+        <property name="lineWidth">
+         <number>3</number>
+        </property>
         <property name="text">
-         <string>Client_User_Page</string>
+         <string>Client_User</string>
         </property>
        </widget>
       </item>
@@ -53,7 +59,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLabel" name="label">
         <property name="minimumSize">
          <size>
           <width>300</width>
@@ -62,9 +68,15 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>30000</width>
+          <width>3000</width>
           <height>20</height>
          </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Shape::Panel</enum>
+        </property>
+        <property name="text">
+         <string>현재 위젯 정보</string>
         </property>
        </widget>
       </item>
@@ -168,7 +180,7 @@
            <x>0</x>
            <y>0</y>
            <width>114</width>
-           <height>290</height>
+           <height>293</height>
           </rect>
          </property>
          <attribute name="label">
@@ -215,7 +227,7 @@
            <x>0</x>
            <y>0</y>
            <width>114</width>
-           <height>290</height>
+           <height>293</height>
           </rect>
          </property>
          <attribute name="label">
@@ -280,6 +292,14 @@
          </layout>
         </widget>
         <widget class="QWidget" name="page">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>114</width>
+           <height>293</height>
+          </rect>
+         </property>
          <attribute name="label">
           <string>고객센터</string>
          </attribute>

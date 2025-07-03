@@ -20,13 +20,13 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    //MainLogin l;  // mainwindow.h에 정의된 클래스
+    MainLogin l;  // mainwindow.h에 정의된 클래스
     //MainUser u;   // mainuser.h에 정의된 클래스
-    MainAdmin ad;
+    //MainAdmin ad;
     //MainJoinMember j;
-    //l.show();
+    l.show();
     //u.show();
-    ad.show();
+    //ad.show();
     //j.show();
 
     return a.exec();
