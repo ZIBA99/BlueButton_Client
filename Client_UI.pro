@@ -21,51 +21,14 @@ VIEWS_DIR = $${SRC_DIR}/views
 CONTR_DIR = $${SRC_DIR}/controllers
 
 
-# ====================== views
-VIEWS_SOURCES += \
-    $${VIEWS_DIR}/mainwindow.cpp
-    # $${VIEWS_DIR}/test.cpp
-
-VIEWS_HEADERS += \
-    $${VIEWS_DIR}/mainwindow.h
-    # $${VIEWS_DIR}/test.h
-
-# ====================== models
-
-# MODEL_SOURCES += \
-#     $${MODEL_DIR}/*.cpp \
-#     $${MODEL_DIR}/entity/*.cpp \
-#     $${MODEL_DIR}/repository/*.cpp \
-#     $${MODEL_DIR}/service/*.cpp
-
-# MODEL_HEADERS += \
-#     $${MODEL_DIR}/*.h \
-#     $${MODEL_DIR}/entity/*.h \
-#     $${MODEL_DIR}/repository/*.h \
-#     $${MODEL_DIR}/service/*.h
-
-# ====================== contorllers
-# CONTR_HEADERS += \
-#     $${CONTR_DIR}/*.cpp
-
-# CONTR_SOURCES += \
-#     $${CONTR_DIR}/*.cpp
-
-
-# ============================================= for utils source
-# UTILS_DIR = $${SRC_DIR}/utils
-
-# UTILS_SOURCES += \
-#     $${UTILS_DIR}/*.cpp
-
-# UTILS_HEADERS += \
-#     $${UTILS_DIR}/*.h
-
-# ============================================= add all sources
-
 SOURCES += \
-    $${SRC_DIR}/main.cpp \
-    $${VIEWS_SOURCES}
+    src/main.cpp \
+    src/views/MainAdmin.cpp \
+    src/views/MainJoinMember.cpp \
+    src/views/MainUser.cpp \
+    src/views/MainLogin.cpp \
+    src/views/TestWindow.cpp
+    # $${VIEWS_SOURCES} \
     # $${MODEL_DIR}/*.cpp \
     # $${MODEL_DIR}/entity/*.cpp \
     # $${MODEL_DIR}/repository/*.cpp \
@@ -74,14 +37,22 @@ SOURCES += \
     # $${CONTR_DIR}/*.cpp
 
 HEADERS += \
-    $${VIEWS_HEADERS}
+    src/views/MainAdmin.h \
+    src/views/MainJoinMember.h \
+    src/views/MainLogin.h \
+    src/views/MainUser.h \
+    src/views/TestWindow.h
 
 INCLUDEPATH += \
     $${VIEWS_DIR}
 
 
 FORMS += \
-    $${CUI_DIR}/mainwindow.ui
+    ui/main_admin.ui \
+    ui/test_window.ui \
+    ui/main_joinmember.ui \
+    ui/main_login.ui\
+    ui/main_user.ui
 
 TRANSLATIONS += \
     $${TR_DIR}/Client_UI_en_US.ts

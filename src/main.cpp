@@ -1,4 +1,7 @@
-#include "mainwindow.h"
+#include "MainJoinMember.h"
+#include "MainLogin.h"
+#include "MainUser.h"
+#include "MainAdmin.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -17,7 +20,14 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow w;
-    w.show();
+    //MainLogin l;  // mainwindow.h에 정의된 클래스
+    //MainUser u;   // mainuser.h에 정의된 클래스
+    MainAdmin ad;
+    //MainJoinMember j;
+    //l.show();
+    //u.show();
+    ad.show();
+    //j.show();
+
     return a.exec();
 }
