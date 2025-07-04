@@ -26,12 +26,10 @@ SOURCES += \
     src/views/AdminComplaintsAndImprovementsWidget.cpp \
     src/views/AdminGeneralInquiryManagementWidget.cpp \
     src/views/CentralManagement.cpp \
-    src/views/EducationInfoApplicationWidget.cpp \
     src/views/MainAdmin.cpp \
     src/views/MainJoinMember.cpp \
     src/views/MainUser.cpp \
     src/views/MainLogin.cpp \
-    src/views/TestWindow.cpp \
     src/views/UserEducationCommunicationWidget.cpp \
     src/views/UserEducationInfoApplicationWidget.cpp \
     src/views/UserGeneralInquiryWidget.cpp \
@@ -50,12 +48,10 @@ HEADERS += \
     src/views/AdminComplaintsAndImprovementsWidget.h \
     src/views/AdminGeneralInquiryManagementWidget.h \
     src/views/CentralManagement.h \
-    src/views/EducationInfoApplicationWidget.h \
     src/views/MainAdmin.h \
     src/views/MainJoinMember.h \
     src/views/MainLogin.h \
     src/views/MainUser.h \
-    src/views/TestWindow.h \
     src/views/UserEducationCommunicationWidget.h \
     src/views/UserEducationInfoApplicationWidget.h \
     src/views/UserGeneralInquiryWidget.h \
@@ -78,13 +74,13 @@ FORMS += \
     ui/userselfhelpwidget.ui \
     ui/userproductwidget.ui \
     ui/main_admin.ui \
-    ui/test_window.ui \
     ui/main_joinmember.ui \
     ui/main_login.ui\
     ui/main_user.ui
 
 TRANSLATIONS += \
-    $${TR_DIR}/Client_UI_en_US.ts
+    $${TR_DIR}/Client_UI_en_US.ts \
+    translation/Client_UI_ko_KR.ts
 
 CONFIG += lrelease
 CONFIG += embed_translations
