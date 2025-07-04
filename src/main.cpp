@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
     }
 
     //아래는 Layout
-    //MainLogin l;  // mainwindow.h에 정의된 클래스
-    //MainUser u;   // mainuser.h에 정의된 클래스
-    //MainAdmin ad;
-    //MainJoinMember j;
+    MainLogin l;  // mainwindow.h에 정의된 클래스
+    MainUser u;   // mainuser.h에 정의된 클래스
+    MainAdmin ad;
+    MainJoinMember j;
 
     //User Widgets
     UserProductWidget userP;
@@ -43,15 +43,15 @@ int main(int argc, char *argv[])
     UserProductComplaintWidget userPC;
 
     //Admin Widgets
-    //CentralManagement AdminCM;
-    //AdminComplaintsAndImprovementsWidget AdminCI;
-    //AdminGeneralInquiryManagementWidget AdminGIM;
+    CentralManagement AdminCM;
+    AdminComplaintsAndImprovementsWidget AdminCI;
+    AdminGeneralInquiryManagementWidget AdminGIM;
 
     //아래는 Layout
-    //l.show();
-    //u.show();
-    //ad.show();
-    //j.show();
+    l.show();
+    u.show();
+    ad.show();
+    j.show();
 
     //User Widgets
     userP.show();
@@ -61,9 +61,9 @@ int main(int argc, char *argv[])
     userPC.show();
 
     //Admin Widgets
-    //AdminCM.show();
-    //AdminCI.show();
-    //AdminGIM.show();
+    AdminCM.show();
+    AdminCI.show();
+    AdminGIM.show();
 
     return a.exec();
 }
