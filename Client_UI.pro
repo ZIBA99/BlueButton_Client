@@ -23,11 +23,21 @@ CONTR_DIR = $${SRC_DIR}/controllers
 
 SOURCES += \
     src/main.cpp \
+    src/views/AdminComplaintsAndImprovementsWidget.cpp \
+    src/views/AdminGeneralInquiryManagementWidget.cpp \
+    src/views/CentralManagement.cpp \
+    src/views/EducationInfoApplicationWidget.cpp \
     src/views/MainAdmin.cpp \
     src/views/MainJoinMember.cpp \
     src/views/MainUser.cpp \
     src/views/MainLogin.cpp \
-    src/views/TestWindow.cpp
+    src/views/TestWindow.cpp \
+    src/views/UserEducationCommunicationWidget.cpp \
+    src/views/UserEducationInfoApplicationWidget.cpp \
+    src/views/UserGeneralInquiryWidget.cpp \
+    src/views/UserProductComplaintWidget.cpp \
+    src/views/UserProductWidget.cpp \
+    src/views/UserSelfHelpWidget.cpp
     # $${VIEWS_SOURCES} \
     # $${MODEL_DIR}/*.cpp \
     # $${MODEL_DIR}/entity/*.cpp \
@@ -37,17 +47,36 @@ SOURCES += \
     # $${CONTR_DIR}/*.cpp
 
 HEADERS += \
+    src/views/AdminComplaintsAndImprovementsWidget.h \
+    src/views/AdminGeneralInquiryManagementWidget.h \
+    src/views/CentralManagement.h \
+    src/views/EducationInfoApplicationWidget.h \
     src/views/MainAdmin.h \
     src/views/MainJoinMember.h \
     src/views/MainLogin.h \
     src/views/MainUser.h \
-    src/views/TestWindow.h
+    src/views/TestWindow.h \
+    src/views/UserEducationCommunicationWidget.h \
+    src/views/UserEducationInfoApplicationWidget.h \
+    src/views/UserGeneralInquiryWidget.h \
+    src/views/UserProductComplaintWidget.h \
+    src/views/UserProductWidget.h \
+    src/views/UserSelfHelpWidget.h
 
 INCLUDEPATH += \
     $${VIEWS_DIR}
 
 
 FORMS += \
+    ui/centralmanagement.ui \
+    ui/admincomplaintsandimprovementswidget.ui \
+    ui/admingeneralinquirymanagementwidget.ui \
+    ui/usereducationcommunicationwidget.ui \
+    ui/usereducationinfoapplicationwidget.ui \
+    ui/usergeneralinquirywidget.ui \
+    ui/userproductcomplaintwidget.ui \
+    ui/userselfhelpwidget.ui \
+    ui/userproductwidget.ui \
     ui/main_admin.ui \
     ui/test_window.ui \
     ui/main_joinmember.ui \
