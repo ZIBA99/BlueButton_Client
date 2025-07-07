@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT += core gui widgets uitools
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -28,6 +28,7 @@ SOURCES += \
     src/views/CentralManagement.cpp \
     src/views/MainAdmin.cpp \
     src/views/MainJoinMember.cpp \
+    src/views/MainStackedWidget.cpp \
     src/views/MainUser.cpp \
     src/views/MainLogin.cpp \
     src/views/UserEducationCommunicationWidget.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     src/views/MainAdmin.h \
     src/views/MainJoinMember.h \
     src/views/MainLogin.h \
+    src/views/MainStackedWidget.h \
     src/views/MainUser.h \
     src/views/UserEducationCommunicationWidget.h \
     src/views/UserEducationInfoApplicationWidget.h \
@@ -64,6 +66,7 @@ INCLUDEPATH += \
 
 
 FORMS += \
+    ui/main_stacked_widget.ui \
     ui/centralmanagement.ui \
     ui/admincomplaintsandimprovementswidget.ui \
     ui/admingeneralinquirymanagementwidget.ui \

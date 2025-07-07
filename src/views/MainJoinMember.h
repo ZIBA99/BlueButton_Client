@@ -2,8 +2,12 @@
 #define MAINJOINMEMBER_H
 
 #include <QMainWindow>
+//#include "MainLogin.h"
 
 QT_BEGIN_NAMESPACE
+
+class MainLogin;
+
 namespace Ui {
 class MainJoinMember;  // MainJoinMember 변경
 }
@@ -17,8 +21,12 @@ public:
     MainJoinMember(QWidget *parent = nullptr);
     ~MainJoinMember();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::MainJoinMember *ui;
+    MainLogin *mainLoginWindow;
 };
 
 #endif // MAINJOINMEMBER_H
