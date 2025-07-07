@@ -70,7 +70,7 @@ INCLUDEPATH += \
 
 
 FORMS += \
-    src/views/admin/admin_default_page.ui \
+    ui/admin/admin_default_page.ui \
     ui/admin/admin_complaint_page.ui \
     ui/admin/admin_inquiry_page.ui \
     ui/admin/admin_main_window.ui \
