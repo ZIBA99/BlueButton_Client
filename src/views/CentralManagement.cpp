@@ -1,5 +1,5 @@
 #include "CentralManagement.h"
-#include "ui_centralmanagement.h"
+#include "ui_central_management.h"
 
 CentralManagement::CentralManagement(QWidget *parent)
     : QWidget(parent)

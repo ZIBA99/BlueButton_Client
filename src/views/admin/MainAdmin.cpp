@@ -1,5 +1,5 @@
 #include "MainAdmin.h"
-#include "ui_main_admin.h"
+#include "ui_admin_main_window.h"
 
 MainAdmin::MainAdmin(QWidget *parent)
     : QMainWindow(parent)

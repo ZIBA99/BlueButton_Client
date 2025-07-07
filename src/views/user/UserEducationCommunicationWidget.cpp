@@ -1,5 +1,5 @@
 #include "UserEducationCommunicationWidget.h"
-#include "ui_usereducationcommunicationwidget.h"
+#include "ui_user_education_communication_widget.h"
 
 UserEducationCommunicationWidget::UserEducationCommunicationWidget(QWidget *parent)
     : QWidget(parent)

@@ -1,5 +1,5 @@
 #include "AdminGeneralInquiryManagementWidget.h"
-#include "ui_admingeneralinquirymanagementwidget.h"
+#include "ui_admin_general_inquiry_management_widget.h"
 
 AdminGeneralInquiryManagementWidget::AdminGeneralInquiryManagementWidget(QWidget *parent)
     : QWidget(parent)

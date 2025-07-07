@@ -1,5 +1,5 @@
 #include "UserSelfHelpWidget.h"
-#include "ui_userselfhelpwidget.h"
+#include "ui_user_self_help_widget.h"
 
 UserSelfHelpWidget::UserSelfHelpWidget(QWidget *parent)
     : QWidget(parent)

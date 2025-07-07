@@ -29,41 +29,41 @@ int main(int argc, char *argv[])
         }
     }
 
-    //아래는 Layout
-    //MainLogin l;  // mainwindow.h에 정의된 클래스
-    //MainUser u;   // mainuser.h에 정의된 클래스
-    //MainAdmin ad;
-    //MainJoinMember j;
+    // //아래는 Layout
+    MainLogin l;  // mainwindow.h에 정의된 클래스
+    MainUser u;   // mainuser.h에 정의된 클래스
+    // MainAdmin ad;
+    // MainJoinMember j;
 
-    //User Widgets
-    UserProductWidget userP;
-    UserEducationInfoApplicationWidget userEIA;
-    UserEducationCommunicationWidget userEC;
-    UserSelfHelpWidget userSH;
-    UserProductComplaintWidget userPC;
+    // //User Widgets
+    // UserProductWidget userP;
+    // UserEducationInfoApplicationWidget userEIA;
+    // UserEducationCommunicationWidget userEC;
+    // UserSelfHelpWidget userSH;
+    // UserProductComplaintWidget userPC;
 
-    //Admin Widgets
-    //CentralManagement AdminCM;
-    //AdminComplaintsAndImprovementsWidget AdminCI;
-    //AdminGeneralInquiryManagementWidget AdminGIM;
+    // //Admin Widgets
+    // CentralManagement AdminCM;
+    // AdminComplaintsAndImprovementsWidget AdminCI;
+    // AdminGeneralInquiryManagementWidget AdminGIM;
 
-    //아래는 Layout
-    //l.show();
-    //u.show();
-    //ad.show();
-    //j.show();
+    // //아래는 Layout
+    l.show();
+    u.show();
+    // ad.show();
+    // j.show();
 
-    //User Widgets
-    userP.show();
-    userEIA.show();
-    userEC.show();
-    userSH.show();
-    userPC.show();
+    // //User Widgets
+    // userP.show();
+    // userEIA.show();
+    // userEC.show();
+    // userSH.show();
+    // userPC.show();
 
-    //Admin Widgets
-    //AdminCM.show();
-    //AdminCI.show();
-    //AdminGIM.show();
+    // //Admin Widgets
+    // AdminCM.show();
+    // AdminCI.show();
+    // AdminGIM.show();
 
     return a.exec();
 }

@@ -1,5 +1,5 @@
 #include "Mainuser.h"
-#include "ui_main_user.h"
+#include "ui_user_main_window.h"
 
 MainUser::MainUser(QWidget *parent)
     : QMainWindow(parent)

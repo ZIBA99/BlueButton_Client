@@ -1,5 +1,5 @@
 #include "AdminComplaintsAndImprovementsWidget.h"
-#include "ui_admincomplaintsandimprovementswidget.h"
+#include "ui_admin_complain_page.h"
 
 AdminComplaintsAndImprovementsWidget::AdminComplaintsAndImprovementsWidget(QWidget *parent)
     : QWidget(parent)

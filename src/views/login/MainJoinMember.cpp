@@ -1,5 +1,5 @@
 #include "MainJoinMember.h"
-#include "ui_main_joinmember.h"
+#include "ui_join_member_main_window.h"
 
 
 MainJoinMember::MainJoinMember(QWidget *parent)
