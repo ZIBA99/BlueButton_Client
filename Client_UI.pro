@@ -24,6 +24,7 @@ CONTR_DIR = $${SRC_DIR}/controllers
 SOURCES += \
     src/main.cpp \
     src/views/admin/AdminComplaintPage.cpp \
+    src/views/admin/AdminDefaultPage.cpp \
     src/views/admin/AdminInquiryPage.cpp \
     src/views/admin/AdminMainWindow.cpp \
     src/views/login/JoinMemberMainWindow.cpp \
@@ -46,6 +47,7 @@ SOURCES += \
 
 HEADERS += \
     src/views/admin/AdminComplaintPage.h \
+    src/views/admin/AdminDefaultPage.h \
     src/views/admin/AdminInquiryPage.h \
     src/views/admin/AdminMainWindow.h \
     src/views/login/JoinMemberMainWindow.h \
@@ -68,8 +70,9 @@ INCLUDEPATH += \
 
 
 FORMS += \
+    src/views/admin/admin_default_page.ui \
     ui/admin/admin_complaint_page.ui \
-    ui/admin/admin_general_inquiry_management_page.ui \
+    ui/admin/admin_inquiry_page.ui \
     ui/admin/admin_main_window.ui \
     ui/central_management.ui \
     ui/login/join_member_main_window.ui \

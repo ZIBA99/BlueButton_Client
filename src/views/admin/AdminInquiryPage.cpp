@@ -1,5 +1,5 @@
 #include "AdminInquiryPage.h"
-#include "ui_admin_general_inquiry_management_page.h"
+#include "ui_admin_inquiry_page.h"
 
 AdminInquiryPage::AdminInquiryPage(QWidget *parent)
     : QWidget(parent)
