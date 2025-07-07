@@ -83,8 +83,7 @@ FORMS += \
     ui/user/user_self_help_widget.ui
 
 TRANSLATIONS += \
-    $${TR_DIR}/Client_UI_en_US.ts \
-    translation/Client_UI_ko_KR.ts
+    $${TR_DIR}/Client_UI_en_US.ts
 
 CONFIG += lrelease
 CONFIG += embed_translations
