@@ -23,19 +23,19 @@ CONTR_DIR = $${SRC_DIR}/controllers
 
 SOURCES += \
     src/main.cpp \
-    src/views/admin/AdminComplaintsAndImprovementsWidget.cpp \
-    src/views/admin/AdminGeneralInquiryManagementWidget.cpp \
-    src/views/admin/MainAdmin.cpp \
-    src/views/login/MainJoinMember.cpp \
-    src/views/login/MainLogin.cpp \
-    src/views/user/MainUser.cpp \
-    src/views/user/UserEducationCommunicationWidget.cpp \
-    src/views/user/UserEducationInfoApplicationWidget.cpp \
-    src/views/user/UserGeneralInquiryWidget.cpp \
-    src/views/user/UserProductComplaintWidget.cpp \
-    src/views/user/UserProductWidget.cpp \
-    src/views/user/UserSelfHelpWidget.cpp \
-    src/views/CentralManagement.cpp
+    src/views/admin/AdminComplaintPage.cpp \
+    src/views/admin/AdminInquiryPage.cpp \
+    src/views/admin/AdminMainWindow.cpp \
+    src/views/login/JoinMemberMainWindow.cpp \
+    src/views/login/LoginMainWindow.cpp \
+    src/views/user/UserEducationChatPage.cpp \
+    src/views/user/UserEducationMainPage.cpp \
+    src/views/user/UserInquiryPage.cpp \
+    src/views/user/UserMainWindow.cpp \
+    src/views/user/UserProductComplaintPage.cpp \
+    src/views/user/UserProductPage.cpp \
+    src/views/CentralManagement.cpp \
+    src/views/user/UserSelfHelpPage.cpp
     # $${VIEWS_SOURCES} \
     # $${MODEL_DIR}/*.cpp \
     # $${MODEL_DIR}/entity/*.cpp \
@@ -45,19 +45,19 @@ SOURCES += \
     # $${CONTR_DIR}/*.cpp
 
 HEADERS += \
-    src/views/admin/AdminComplaintsAndImprovementsWidget.h \
-    src/views/admin/AdminGeneralInquiryManagementWidget.h \
-    src/views/admin/MainAdmin.h \
-    src/views/login/MainJoinMember.h \
-    src/views/login/MainLogin.h \
-    src/views/user/MainUser.h \
-    src/views/user/UserEducationCommunicationWidget.h \
-    src/views/user/UserEducationInfoApplicationWidget.h \
-    src/views/user/UserGeneralInquiryWidget.h \
-    src/views/user/UserProductComplaintWidget.h \
-    src/views/user/UserProductWidget.h \
-    src/views/user/UserSelfHelpWidget.h \
-    src/views/CentralManagement.h
+    src/views/admin/AdminComplaintPage.h \
+    src/views/admin/AdminInquiryPage.h \
+    src/views/admin/AdminMainWindow.h \
+    src/views/login/JoinMemberMainWindow.h \
+    src/views/login/LoginMainWindow.h \
+    src/views/user/UserEducationChatPage.h \
+    src/views/user/UserEducationMainPage.h \
+    src/views/user/UserInquiryPage.h \
+    src/views/user/UserMainWindow.h \
+    src/views/user/UserProductComplaintPage.h \
+    src/views/user/UserProductPage.h \
+    src/views/CentralManagement.h \
+    src/views/user/UserSelfHelpPage.h
 
 INCLUDEPATH += \
     $${SRC_DIR} \
@@ -68,19 +68,19 @@ INCLUDEPATH += \
 
 
 FORMS += \
-    ui/admin/admin_complain_page.ui \
-    ui/admin/admin_general_inquiry_management_widget.ui \
+    ui/admin/admin_complaint_page.ui \
+    ui/admin/admin_general_inquiry_management_page.ui \
     ui/admin/admin_main_window.ui \
     ui/central_management.ui \
     ui/login/join_member_main_window.ui \
     ui/login/login_main_window.ui \
-    ui/user/user_education_communication_widget.ui \
-    ui/user/user_education_info_application_widget.ui \
-    ui/user/user_general_inquiry_widget.ui \
+    ui/user/user_education_chat_page.ui \
+    ui/user/user_education_main_page.ui \
+    ui/user/user_general_inquiry_page.ui \
     ui/user/user_main_window.ui \
-    ui/user/user_product_complaint_widget.ui \
-    ui/user/user_product_widget.ui \
-    ui/user/user_self_help_widget.ui
+    ui/user/user_product_complaint_page.ui \
+    ui/user/user_product_page.ui \
+    ui/user/user_self_help_page.ui
 
 TRANSLATIONS += \
     $${TR_DIR}/Client_UI_en_US.ts

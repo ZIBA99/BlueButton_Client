@@ -1,15 +1,15 @@
-#include "MainJoinMember.h"
-#include "MainLogin.h"
-#include "MainUser.h"
-#include "MainAdmin.h"
-#include "UserProductWidget.h"
-#include "UserEducationInfoApplicationWidget.h"
-#include "UserEducationCommunicationWidget.h"
-#include "UserSelfHelpWidget.h"
-#include "UserProductComplaintWidget.h"
+#include "JoinMemberMainWindow.h"
+#include "LoginMainWindow.h"
+#include "UserMainWindow.h"
+#include "AdminMainWindow.h"
+#include "UserProductPage.h"
+#include "UserEducationMainPage.h"
+#include "UserEducationChatPage.h"
+#include "UserSelfHelpPage.h"
+#include "UserProductComplaintPage.h"
 #include "CentralManagement.h"
-#include "AdminComplaintsAndImprovementsWidget.h"
-#include "AdminGeneralInquiryManagementWidget.h"
+#include "AdminComplaintPage.h"
+#include "AdminInquiryPage.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
     }
 
     // //아래는 Layout
-    MainLogin l;  // mainwindow.h에 정의된 클래스
-    MainUser u;   // mainuser.h에 정의된 클래스
+    LoginMainWindow l;  // mainwindow.h에 정의된 클래스
+    // UserMainWindow u;   // mainuser.h에 정의된 클래스
     // MainAdmin ad;
     // MainJoinMember j;
 
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
     // //아래는 Layout
     l.show();
-    u.show();
+    // u.show();
     // ad.show();
     // j.show();
 
