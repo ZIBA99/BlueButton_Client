@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
     }
 
     // //아래는 Layout
-    LoginMainWindow l;  // mainwindow.h에 정의된 클래스
-    // UserMainWindow u;   // mainuser.h에 정의된 클래스
+    //LoginMainWindow l;  // mainwindow.h에 정의된 클래스
+    UserMainWindow u;   // mainuser.h에 정의된 클래스
     AdminMainWindow ad;
     // MainJoinMember j;
 
@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
     // AdminGeneralInquiryManagementWidget AdminGIM;
 
     // //아래는 Layout
-    l.show();
-    // u.show();
+    //l.show();
+    u.show();
     ad.show();
     // j.show();
 

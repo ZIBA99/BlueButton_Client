@@ -36,7 +36,8 @@ SOURCES += \
     src/views/user/UserProductComplaintPage.cpp \
     src/views/user/UserProductPage.cpp \
     src/views/CentralManagement.cpp \
-    src/views/user/UserSelfHelpPage.cpp
+    src/views/user/UserSelfHelpPage.cpp \
+    src/views/user/UserDefaultPage.cpp \
     # $${VIEWS_SOURCES} \
     # $${MODEL_DIR}/*.cpp \
     # $${MODEL_DIR}/entity/*.cpp \
@@ -46,6 +47,7 @@ SOURCES += \
     # $${CONTR_DIR}/*.cpp
 
 HEADERS += \
+    src/views/user/UserDefaultPage.h \
     src/views/admin/AdminComplaintPage.h \
     src/views/admin/AdminDefaultPage.h \
     src/views/admin/AdminInquiryPage.h \
@@ -70,6 +72,7 @@ INCLUDEPATH += \
 
 
 FORMS += \
+    ui/user/user_default_page.ui \
     ui/admin/admin_default_page.ui \
     ui/admin/admin_complaint_page.ui \
     ui/admin/admin_inquiry_page.ui \
