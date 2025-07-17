@@ -40,12 +40,12 @@ private slots:
 private:
     Ui::UserMainWindow *ui;
     UserDefaultPage *defaultPage;
-    UserEducationChatPage *usereducationchatpage;
-    UserEducationMainPage *usereducationpage;
-    UserInquiryPage *userinquirypage;
-    UserProductPage *userproductpage;
-    UserProductComplaintPage *userproductcomplainpage;
-    UserSelfHelpPage *userselfhelpage;
+    UserEducationChatPage *userEducationChatPage;
+    UserEducationMainPage *userEducationPage;
+    UserInquiryPage *userInquiryPage;
+    UserProductPage *userProductPage;
+    UserProductComplaintPage *userProductComplainPage;
+    UserSelfHelpPage *userSelfHelpPage;
 
     void setEmptyPageLayout();
 };
