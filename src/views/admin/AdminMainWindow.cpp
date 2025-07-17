@@ -9,6 +9,8 @@ AdminMainWindow::AdminMainWindow(QWidget *parent)
     defaultPage = new AdminDefaultPage;
     complaintPage = new AdminComplaintPage;
     inquiryPage = new AdminInquiryPage;
+    eduCationPage = new AminEuducationChatPage;
+
     ui->mainLayout->insertWidget(0,defaultPage);
 }
 
@@ -21,6 +23,7 @@ void AdminMainWindow::setEmptyPageLayout(){
     defaultPage->setParent(NULL);
     complaintPage->setParent(NULL);
     inquiryPage->setParent(NULL);
+    eduCationPage->setParent(NULL);
 }
 
 void AdminMainWindow::on_pushButton_complaint_clicked()
@@ -33,5 +36,12 @@ void AdminMainWindow::on_pushButton_inquiry_clicked()
 {
     setEmptyPageLayout();
     ui->mainLayout->addWidget(inquiryPage);
+}
+
+
+void AdminMainWindow::on_pushButton_eduCationPage_clicked()
+{
+    setEmptyPageLayout();
+    ui->mainLayout->addWidget(eduCationPage);
 }
 
