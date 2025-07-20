@@ -172,7 +172,7 @@
          <number>3</number>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="widget">
          <property name="geometry">
@@ -188,7 +188,7 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="product_page">
             <property name="minimumSize">
              <size>
               <width>100</width>
@@ -237,7 +237,7 @@
           <item row="0" column="0">
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="education_main_page">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -256,7 +256,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="education_chat_page">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -307,7 +307,7 @@
           <item row="0" column="0">
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="self_help_page">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -326,7 +326,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_5">
+             <widget class="QPushButton" name="praduct_complain_page">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -345,7 +345,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_6">
+             <widget class="QPushButton" name="genernal_inquory_page">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -399,7 +399,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QListWidget" name="listWidget"/>
+       <layout class="QVBoxLayout" name="mainLayout"/>
       </item>
      </layout>
     </item>
