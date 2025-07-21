@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -39,7 +39,7 @@ SOURCES += \
     src/views/user/UserSelfHelpPage.cpp \
     src/views/user/UserDefaultPage.cpp \
     src/views/admin/AminEuducationChatPage.cpp \
-    src/contollers/ClientSocket.cpp
+    src/controllers/ClientSocket.cpp
     # $${VIEWS_SOURCES} \
     # $${MODEL_DIR}/*.cpp \
     # $${MODEL_DIR}/entity/*.cpp \
@@ -66,7 +66,7 @@ HEADERS += \
     src/views/CentralManagement.h \
     src/views/user/UserSelfHelpPage.h \
     src/views/admin/AminEuducationChatPage.h \
-    src/contollers/ClientSocket.h
+    src/controllers/ClientSocket.h
 
 
 INCLUDEPATH += \
