@@ -2,75 +2,45 @@
 #include "ui_user_main_window.h"
 
 UserMainWindow::UserMainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
     , ui(new Ui::UserMainWindow)
 {
+    setAcceptDrops(true);
     ui->setupUi(this);
-    defaultPage = new UserDefaultPage;
-    userEducationChatPage = new UserEducationChatPage;
-    userEducationPage = new UserEducationMainPage;
-    userInquiryPage = new UserInquiryPage;
-    userProductPage = new UserProductPage;
-    userProductComplainPage = new UserProductComplaintPage;
-    userSelfHelpPage = new UserSelfHelpPage;
-
-    ui->mainLayout->insertWidget(0,defaultPage);
-
 }
 
 UserMainWindow::~UserMainWindow()
 {
     delete ui;
 }
-
-void UserMainWindow::setEmptyPageLayout(){
-    defaultPage->setParent(NULL);
-    userEducationChatPage->setParent(NULL);
-    userEducationPage->setParent(NULL);
-    userInquiryPage->setParent(NULL);
-    userProductPage->setParent(NULL);
-    userProductComplainPage->setParent(NULL);
-    userSelfHelpPage->setParent(NULL);
+void UserMainWindow::dragEnterEvent(QDragEnterEvent* event){
+    if (event->mimeData()->hasText()) {
+        event->acceptProposedAction();
+        setStyleSheet("border: 2px dashed #0080ff;"); // 드래그 시 하이라이트
+    }
 }
 
-void UserMainWindow::on_product_page_clicked()
-{
-    setEmptyPageLayout();
-    ui->mainLayout->addWidget(userProductPage);
+void UserMainWindow::dragLeaveEvent(QDragLeaveEvent* event){
+    setStyleSheet("border: 2px dashed #aaa;"); // 원래 스타일로 복원
 }
 
+void UserMainWindow::dropEvent(QDropEvent* event){
+    const QMimeData* mimeData = event->mimeData();
 
-void UserMainWindow::on_education_main_page_clicked()
-{
-    setEmptyPageLayout();
-    ui->mainLayout->addWidget(userEducationPage);
+    if (mimeData->hasText()) {
+        QPoint dropPos = event->position().toPoint();
+
+        // 드롭된 위젯 찾기
+        QWidget* draggedWidget = findWidgetByName(mimeData->text());
+        if (draggedWidget) {
+            // 위젯을 새 위치로 이동
+            draggedWidget->setParent(this);
+            draggedWidget->move(dropPos);
+            draggedWidget->show();
+        }
+
+        event->acceptProposedAction();
+    }
+
+    setStyleSheet("border: 2px dashed #aaa;");
 }
-
-
-void UserMainWindow::on_education_chat_page_clicked()
-{
-    setEmptyPageLayout();
-    ui->mainLayout->addWidget(userEducationChatPage);
-}
-
-
-void UserMainWindow::on_self_help_page_clicked()
-{
-    setEmptyPageLayout();
-    ui->mainLayout->addWidget(userSelfHelpPage);
-}
-
-
-void UserMainWindow::on_praduct_complain_page_clicked()
-{
-    setEmptyPageLayout();
-    ui->mainLayout->addWidget(userProductComplainPage);
-}
-
-
-void UserMainWindow::on_genernal_inquory_page_clicked()
-{
-    setEmptyPageLayout();
-    ui->mainLayout->addWidget(userInquiryPage);
-}
-

@@ -1,15 +1,8 @@
 #include "JoinMemberMainWindow.h"
 #include "LoginMainWindow.h"
 #include "UserMainWindow.h"
-#include "AdminMainWindow.h"
-#include "UserProductPage.h"
-#include "UserEducationMainPage.h"
-#include "UserEducationChatPage.h"
-#include "UserSelfHelpPage.h"
-#include "UserProductComplaintPage.h"
-#include "CentralManagement.h"
-#include "AdminComplaintPage.h"
-#include "AdminInquiryPage.h"
+// #include "AdminMainWindow.h"
+
 
 #include <QApplication>
 #include <QLocale>
@@ -30,26 +23,14 @@ int main(int argc, char *argv[])
     }
 
     // //아래는 Layout
-    LoginMainWindow l;  // mainwindow.h에 정의된 클래스
-    // UserMainWindow u;   // mainuser.h에 정의된 클래스
+    // LoginMainWindow l;  // mainwindow.h에 정의된 클래스
+    UserMainWindow u;   // mainuser.h에 정의된 클래스
     // AdminMainWindow ad;
-    // MainJoinMember j;
 
-    // //User Widgets
-    // UserProductWidget userP;
-    // UserEducationInfoApplicationWidget userEIA;
-    // UserEducationCommunicationWidget userEC;
-    // UserSelfHelpWidget userSH;
-    // UserProductComplaintWidget userPC;
-
-    // //Admin Widgets
-    // CentralManagement AdminCM;
-    // AdminComplaintsAndImprovementsWidget AdminCI;
-    // AdminGeneralInquiryManagementWidget AdminGIM;
 
     // //아래는 Layout
-    l.show();
-    // u.show();
+    // l.show();
+    u.show();
     // ad.show();
     // j.show();
 
