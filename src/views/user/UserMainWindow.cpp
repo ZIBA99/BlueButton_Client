@@ -1,19 +1,40 @@
 #include "UserMainWindow.h"
 #include "ui_user_main_window.h"
-
-
+#include "LoginMainWindow.h"
+#include "ui_login_main_window.h"
+#include <QDebug>
+#include <QStandardItemModel>
 UserMainWindow::UserMainWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UserMainWindow)
+    , m_client(nullptr)
+    , m_imageDownloader(nullptr)
 {
-
     ui->setupUi(this);
     setAcceptDrops(true);
+
+    // ClientSocket 초기화 및 연결
     m_client = new ClientSocket(this);
     connectServer();
-    m_client->requestProductList();
+    model = new QStandardItemModel(this);
+    ui->listView_rooms->setModel(model);
+    // ImageDownloader 초기화 및 연결
+    m_imageDownloader = new ImageDownloader(this);
+    connectImageDownloader();
 
+    // 제품 목록 요청
+    m_client->requestProductList();
+    m_client->requestChatRoomList();
     connect(m_client, &ClientSocket::productListReceived, this, &UserMainWindow::onProductListReceived);
+    connect(m_client, &ClientSocket::chatRoomListReceived, this, &UserMainWindow::onChatRoomListReceived);
+    connect(ui->listView_rooms, &QListView::clicked, this, &UserMainWindow::onChatRoomClicked);
+
+    connect(m_client, &ClientSocket::chatRoomJoined, this, &UserMainWindow::onChatRoomJoined);
+    connect(m_client, &ClientSocket::chatRoomLeft, this, &UserMainWindow::onChatRoomLeft);
+    connect(m_client, &ClientSocket::chatMessageSent, this, &UserMainWindow::onChatMessageSent);
+    connect(m_client, &ClientSocket::chatHistoryReceived, this, &UserMainWindow::onChatHistoryReceived);
+    connect(m_client, &ClientSocket::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived);
+
 }
 
 UserMainWindow::~UserMainWindow()
@@ -21,18 +42,20 @@ UserMainWindow::~UserMainWindow()
     delete ui;
 }
 
-void UserMainWindow::dragEnterEvent(QDragEnterEvent* event){
+void UserMainWindow::dragEnterEvent(QDragEnterEvent* event)
+{
     if (event->mimeData()->hasText()) {
         event->acceptProposedAction();
-        // setStyleSheet("border: 2px dashed #0080ff;"); // 드래그 시 하이라이트
     }
 }
 
-void UserMainWindow::dragLeaveEvent(QDragLeaveEvent* event){
-    // setStyleSheet("border: 2px dashed #aaa;"); // 원래 스타일로 복원
+void UserMainWindow::dragLeaveEvent(QDragLeaveEvent* event)
+{
+    // 드래그 떠날 때 처리
 }
 
-void UserMainWindow::dropEvent(QDropEvent* event){
+void UserMainWindow::dropEvent(QDropEvent* event)
+{
     const QMimeData* mimeData = event->mimeData();
 
     if (mimeData->hasText()) {
@@ -43,10 +66,12 @@ void UserMainWindow::dropEvent(QDropEvent* event){
         // 드롭된 위젯 찾기
         ProductWidget* draggedWidget = qobject_cast<ProductWidget*>(findWidgetByName(mimeData->text()));
         qDebug() << draggedWidget->productImageButton->text();
+
         if (!targetLayout) {
             qDebug() << "No target layout found at position:" << dropPos;
             return;
         }
+
         if (draggedWidget->parent()) {
             QGridLayout* oldLayout = qobject_cast<QGridLayout*>(draggedWidget->parentWidget()->layout());
             if (oldLayout) {
@@ -58,13 +83,11 @@ void UserMainWindow::dropEvent(QDropEvent* event){
         if (draggedWidget) {
             // 위젯을 새 위치로 이동
             targetLayout->addWidget(draggedWidget);
-            rearrangeGridLayout(ui->layout_cartList,1);
+            rearrangeGridLayout(ui->layout_cartList, 1);
             rearrangeGridLayout(ui->layout_productList, PRODUCT_LIST_COL_SIZE);
         }
         event->acceptProposedAction();
     }
-
-    // setStyleSheet("border: 2px dashed #aaa;");
 }
 
 void UserMainWindow::rearrangeGridLayout(QGridLayout* layout, int maxColumns)
@@ -134,13 +157,13 @@ void UserMainWindow::onAnyProductDoubleClicked()
 
 void UserMainWindow::onProductListReceived(const QJsonArray &products)
 {
-    // addLogMessage(QString("📦 제품 목록 수신 (%1개):").arg(products.size()));
+    qDebug() << QString("📦 제품 목록 수신 (%1개)").arg(products.size());
+
     int count = 0;
     for (const QJsonValue &value : products) {
         ProductWidget *productWidget = new ProductWidget();
-        // product->setFixedSize(QSize(320,260));
-        int row = count/PRODUCT_LIST_COL_SIZE;
-        int col = count%PRODUCT_LIST_COL_SIZE;
+        int row = count / PRODUCT_LIST_COL_SIZE;
+        int col = count % PRODUCT_LIST_COL_SIZE;
 
         QJsonObject productJson = value.toObject();
 
@@ -150,22 +173,56 @@ void UserMainWindow::onProductListReceived(const QJsonArray &products)
         int stock = productJson.value("stock").toInt();
         id_t productId = productJson.value("productId").toInteger();
         id_t roomId = productJson.value("roomId").toInteger();
+        QString imageFileName = productJson.value("imageFileName").toString();  // 이미지 파일명 추가
 
-        productWidget->setInfo(productId, roomId, category, name, price, stock);
+        // 제품 정보 설정 (이미지 파일명 포함)
+        if (!imageFileName.isEmpty()) {
+            productWidget->setInfo(productId, roomId, category, name, price, stock, imageFileName);
+
+            // 파일명 -> 위젯 매핑 저장
+            m_fileNameToWidget[imageFileName] = productWidget;
+        } else {
+            productWidget->setInfo(productId, roomId, category, name, price, stock);
+        }
+
         productWidget->setObjectName(QString("product_%1").arg(count));
-        productWidget->productImageButton->setText(QString("Item%1-%2").arg(row).arg(col));
         connect(productWidget, SIGNAL(doubleClicked()), this, SLOT(onAnyProductDoubleClicked()));
-        ui->layout_productList->addWidget(productWidget,row,col,Qt::AlignTop|Qt::AlignLeft);
-        qDebug() << QString("  - [%1] %2 (%3) - %4, 재고: %5개")
-                          .arg(productId)
-                          .arg(name, category)
-                          .arg(price)
-                          .arg(stock);
+        ui->layout_productList->addWidget(productWidget, row, col, Qt::AlignTop | Qt::AlignLeft);
+
+        qDebug() << QString("  - [%1] %2 (%3) - %4, 재고: %5개, 이미지: %6")
+                        .arg(productId)
+                        .arg(name, category)
+                        .arg(price)
+                        .arg(stock)
+                        .arg(imageFileName.isEmpty() ? "없음" : imageFileName);
         count++;
     }
-    rearrangeGridLayout(ui->layout_cartList,1);
+
+    rearrangeGridLayout(ui->layout_cartList, 1);
     rearrangeGridLayout(ui->layout_productList, PRODUCT_LIST_COL_SIZE);
+
+    // 제품 목록 로딩 완료 후 이미지 다운로드 시작
+    downloadProductImages();
 }
+
+
+
+void UserMainWindow::onChatRoomListReceived(const QJsonArray &rooms){
+
+    qDebug() << QString("📦 채팅방 목록 수신 (%1개)").arg(rooms.size());
+    int count = 0;
+    for (const QJsonValue &value : rooms) {
+        count++;
+        QJsonObject chatRoomJson = value.toObject();
+        QString name = chatRoomJson.value("chatRoomName").toString();
+        id_t roomId = chatRoomJson.value("chatRoomId").toInteger();
+        QStandardItem* item = new QStandardItem(name);
+        item->setData(roomId, Qt::UserRole + 1);
+        model->appendRow(item);
+
+    }
+}
+
 
 void UserMainWindow::connectServer()
 {
@@ -173,17 +230,124 @@ void UserMainWindow::connectServer()
         QString host = "192.168.2.181";
         quint16 port = 5105;
 
-        qDebug() << QString("서버 연결 시도: %1:%2").arg(host).arg(port);
+        qDebug() << QString("JSON 서버 연결 시도: %1:%2").arg(host).arg(port);
         bool success = m_client->connectToServer(host, port);
 
         if (!success) {
-            qDebug("서버 연결에 실패했습니다.");
+            qDebug("JSON 서버 연결에 실패했습니다.");
+        } else {
+            qDebug("JSON 서버 연결 성공!");
         }
     } else {
         m_client->disconnectFromServer();
     }
 }
 
+void UserMainWindow::connectImageDownloader()
+{
+    // ImageDownloader 시그널 연결
+    connect(m_imageDownloader, &ImageDownloader::connected, this, []() {
+        qDebug() << "✅ 이미지 다운로드 서버 연결 성공!";
+    });
+
+    connect(m_imageDownloader, &ImageDownloader::disconnected, this, []() {
+        qDebug() << "❌ 이미지 다운로드 서버 연결 해제";
+    });
+
+    connect(m_imageDownloader, &ImageDownloader::errorOccurred, this, [](const QString &error) {
+        qDebug() << "🔥 이미지 다운로드 서버 오류:" << error;
+    });
+
+    connect(m_imageDownloader, &ImageDownloader::downloadCompleted,
+            this, &UserMainWindow::onImageDownloadCompleted);
+    connect(m_imageDownloader, &ImageDownloader::downloadFailed,
+            this, &UserMainWindow::onImageDownloadFailed);
+    connect(m_imageDownloader, &ImageDownloader::downloadProgress,
+            this, &UserMainWindow::onImageDownloadProgress);
+
+    // 이미지 서버에 연결
+    QString host = "192.168.2.181";
+    quint16 port = 5115;
+
+    qDebug() << QString("이미지 서버 연결 시도: %1:%2").arg(host).arg(port);
+    bool success = m_imageDownloader->connectToServer(host, port);
+
+    if (!success) {
+        qDebug("이미지 서버 연결에 실패했습니다.");
+    }
+}
+
+void UserMainWindow::downloadProductImages()
+{
+    if (!m_imageDownloader->isConnected()) {
+        qDebug() << "이미지 서버가 연결되지 않았습니다. 다운로드를 건너뜁니다.";
+        return;
+    }
+
+    qDebug() << QString("🔄 제품 이미지 다운로드 시작 (%1개 파일)").arg(m_fileNameToWidget.size());
+
+    // 각 제품의 이미지 파일 다운로드 요청
+    for (auto it = m_fileNameToWidget.begin(); it != m_fileNameToWidget.end(); ++it) {
+        const QString &fileName = it.key();
+        ProductWidget *widget = it.value();
+
+        // 이미 다운로드된 이미지인지 확인
+        if (m_imageDownloader->imageExists(fileName)) {
+            qDebug() << "이미지가 이미 존재함:" << fileName;
+            updateProductImage(widget, m_imageDownloader->getImagePath(fileName));
+            continue;
+        }
+
+        // 이미지 다운로드 요청
+        int requestId = m_imageDownloader->requestImage(fileName);
+        if (requestId != -1) {
+            m_downloadRequests[requestId] = widget;
+            qDebug() << QString("이미지 다운로드 요청: %1 (RequestID: %2)").arg(fileName).arg(requestId);
+        }
+    }
+}
+
+void UserMainWindow::updateProductImage(ProductWidget* widget, const QString &imagePath)
+{
+    if (widget) {
+        widget->setProductImage(imagePath);
+        qDebug() << "제품 이미지 업데이트 완료:" << imagePath;
+    }
+}
+
+void UserMainWindow::onImageDownloadCompleted(int requestId, const QString &fileName, const QString &savedPath)
+{
+    qDebug() << QString("📥 이미지 다운로드 완료: %1 → %2").arg(fileName).arg(savedPath);
+
+    // 요청 ID로 위젯 찾기
+    if (m_downloadRequests.contains(requestId)) {
+        ProductWidget *widget = m_downloadRequests[requestId];
+        updateProductImage(widget, savedPath);
+        m_downloadRequests.remove(requestId);
+    }
+}
+
+void UserMainWindow::onImageDownloadFailed(int requestId, const QString &fileName, const QString &error)
+{
+    qDebug() << QString("❌ 이미지 다운로드 실패: %1 - %2").arg(fileName).arg(error);
+
+    // 실패한 요청 정리
+    if (m_downloadRequests.contains(requestId)) {
+        ProductWidget *widget = m_downloadRequests[requestId];
+        // 실패 시 기본 이미지로 설정
+        widget->setDefaultImage();
+        m_downloadRequests.remove(requestId);
+    }
+}
+
+void UserMainWindow::onImageDownloadProgress(int requestId, qint64 bytesReceived, qint64 totalBytes)
+{
+    // 진행률 로그 (필요시 UI 업데이트)
+    int progress = (bytesReceived * 100) / totalBytes;
+    if (progress % 25 == 0) { // 25% 단위로만 로그
+        qDebug() << QString("📊 다운로드 진행률 (RequestID %1): %2%").arg(requestId).arg(progress);
+    }
+}
 
 void UserMainWindow::switchMainView(UserMainView view)
 {
@@ -195,9 +359,104 @@ void UserMainWindow::on_pushButton_shop_clicked()
     switchMainView(UserMainView::Shop);
 }
 
-
 void UserMainWindow::on_pushButton_chat_clicked()
 {
     switchMainView(UserMainView::Chat);
+}
+
+void UserMainWindow::selectChatRoomById(id_t roomIdToSelect) {
+    for (int row = 0; row < model->rowCount(); ++row) {
+        QStandardItem* item = model->item(row);
+        id_t roomId = item->data(Qt::UserRole + 1).toInt();  // 저장된 roomId 추출
+
+        if (roomId == roomIdToSelect) {
+            QModelIndex index = model->indexFromItem(item);
+            ui->listView_rooms->setCurrentIndex(index);  // 현재 선택
+            ui->listView_rooms->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+            break;
+        }
+    }
+}
+
+void UserMainWindow::onChatRoomClicked(const QModelIndex& index) {
+    QString roomName = index.data(Qt::DisplayRole).toString();
+    m_client->leaveChatRoom(m_currentChatRoomId, 0);
+    id_t roomId = index.data(Qt::UserRole+1).toInt();
+    qDebug() << "채팅방 선택됨:" << roomName << "(" << roomId << ")";
+
+    qDebug() << "채팅방 열기:" << roomName;
+    switchMainView(UserMainView::Chat);
+    selectChatRoomById(roomId);
+    m_client->joinChatRoom(roomId, 0);
+}
+
+void UserMainWindow::openChatRoom(const QString& roomName) {
+
+    // 예: QWidget을 띄우거나 데이터 로딩 등
+}
+
+
+
+void UserMainWindow::onChatRoomJoined(const QJsonObject &chatRoom)
+{
+    int roomId = chatRoom.value("chatRoomId").toInt();
+    QString roomName = chatRoom.value("chatRoomName").toString();
+
+    qDebug() <<QString("✅ 채팅방 참여 완료 - ID: %1, 이름: %2")
+                      .arg(roomId).arg(roomName);
+    m_currentChatRoomId = roomId;
+    ui->plainTextEdit_chat->clear();
+    m_client->requestChatHistory(roomId);
+}
+
+void UserMainWindow::onChatRoomLeft(bool success)
+{
+    if (success) {
+        qDebug() <<"✅ 채팅방 나가기 완료";
+    } else {
+        qDebug() <<"❌ 채팅방 나가기 실패";
+    }
+}
+
+void UserMainWindow::onChatMessageSent(const QJsonObject &message)
+{
+    int chatId = message.value("chatId").toInt();
+    QString chatStr = message.value("chatStr").toString();
+
+    qDebug() <<QString("✅ 메시지 전송 완료 - ID: %1, 내용: %2")
+                      .arg(chatId).arg(chatStr);
+
+    m_client->requestChatHistory(m_currentChatRoomId);
+}
+
+void UserMainWindow::onChatHistoryReceived(const QJsonArray &messages)
+{
+    qDebug() <<QString("💬 채팅 기록 수신 (%1개):").arg(messages.size());
+
+    for (const QJsonValue &value : messages) {
+        QJsonObject message = value.toObject();
+        int userId = message.value("userId").toInt();
+        QString chatStr = message.value("chatStr").toString();
+        QString chatTime = message.value("chatTime").toString();
+        QString chatlog = QString("  - [%1] %2: %3").arg(chatTime).arg(userId).arg(chatStr);
+        qDebug() << chatlog;
+        ui->plainTextEdit_chat->appendPlainText(chatlog);
+    }
+}
+
+void UserMainWindow::onChatMessageReceived(const QJsonObject &message)
+{
+    int userId = message.value("userId").toInt();
+    QString chatStr = message.value("chatStr").toString();
+    QString chatTime = message.value("chatTime").toString();
+    QString chatlog = QString("  - [%1] %2: %3").arg(chatTime).arg(userId).arg(chatStr);
+    qDebug() << chatlog;
+    ui->plainTextEdit_chat->appendPlainText(chatlog);
+}
+
+void UserMainWindow::on_lineEdit_editingFinished()
+{
+    QString chatText = ui->lineEdit->text();
+    m_client->sendChatMessage(m_currentChatRoomId,chatText);
 }
 

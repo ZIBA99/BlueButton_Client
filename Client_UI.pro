@@ -22,6 +22,8 @@ CONTR_DIR = $${SRC_DIR}/controllers
 
 
 SOURCES += \
+    src/controllers/FileTransfer.cpp \
+    src/controllers/ImageDownloader.cpp \
     src/main.cpp \
     src/controllers/ClientSocket.cpp \
     src/models/entity/Entity.cpp \
@@ -43,6 +45,8 @@ SOURCES += \
 
 
 HEADERS += \
+    src/controllers/FileTransfer.h \
+    src/controllers/ImageDownloader.h \
     src/models/entity/Entity.h \
     src/models/entity/Product.h \
     src/models/service/ProductManager.h \

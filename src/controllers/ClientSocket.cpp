@@ -29,7 +29,7 @@ bool ClientSocket::connectToServer(const QString &host, quint16 port)
         return true;
     }
 
-    qDebug() << "Connecting to server:" << host << ":" << port;
+    qDebug() << "Connecting to JSON server:" << host << ":" << port;
     m_socket->connectToHost(host, port);
 
     return m_socket->waitForConnected(5000);
@@ -238,6 +238,12 @@ bool ClientSocket::requestChatHistory(int chatRoomId)
     return sendMessage(message);
 }
 
+bool ClientSocket::requestChatRoomList(){
+    QJsonObject message = createCommandMessage("list", "chatroom");
+    return sendMessage(message);
+}
+
+
 // OrderItem 관련 메서드들
 bool ClientSocket::addOrderItem(int orderId, int productId, int quantity, double unitPrice)
 {
@@ -274,13 +280,13 @@ bool ClientSocket::removeOrderItem(int itemId)
 // 네트워크 이벤트 핸들러들
 void ClientSocket::onConnected()
 {
-    qDebug() << "Connected to server";
+    qDebug() << "Connected to JSON server";
     emit connected();
 }
 
 void ClientSocket::onDisconnected()
 {
-    qDebug() << "Disconnected from server";
+    qDebug() << "Disconnected from JSON server";
     m_sessionId.clear();
     m_currentUserId.clear();
     m_lastAction.clear();
@@ -297,7 +303,7 @@ void ClientSocket::onReadyRead()
 void ClientSocket::onSocketError(QAbstractSocket::SocketError error)
 {
     QString errorString = m_socket->errorString();
-    qDebug() << "Socket error:" << errorString;
+    qDebug() << "JSON socket error:" << errorString;
     emit errorOccurred(errorString);
 }
 
@@ -406,7 +412,7 @@ bool ClientSocket::sendMessage(const QJsonObject &message)
     bool success = (bytesWritten == packet.size());
 
     if (success) {
-        qDebug() << "Message sent:" << jsonData;
+        qDebug() << "JSON message sent:" << jsonData;
     } else {
         emit errorOccurred("Failed to send message");
     }
@@ -536,6 +542,8 @@ void ClientSocket::handleResponse(const QJsonObject &response)
             }
         } else if (action == "leave") {
             emit chatRoomLeft(success);
+        } else if (action == "list" && data.contains("rooms")) {
+            emit chatRoomListReceived(data.value("rooms").toArray());
         }
     }
     else if (target == "chat") {
@@ -571,10 +579,6 @@ void ClientSocket::handleResponse(const QJsonObject &response)
         QString errorMessage = QString("Error %1: %2").arg(errorCode, errorDescription);
         emit errorOccurred(errorMessage);
     }
-
-    // 응답 처리 후 마지막 요청 정보 초기화 (선택적)
-    // m_lastAction.clear();
-    // m_lastTarget.clear();
 }
 
 void ClientSocket::handleEvent(const QJsonObject &event)

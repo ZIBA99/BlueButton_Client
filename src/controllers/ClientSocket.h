@@ -6,7 +6,6 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QTimer>
 #include <QDataStream>
 #include <QByteArray>
 
@@ -52,6 +51,7 @@ public:
     bool leaveChatRoom(int chatRoomId, int userId);
     bool sendChatMessage(int chatRoomId, const QString &message);
     bool requestChatHistory(int chatRoomId);
+    bool requestChatRoomList();
 
     // OrderItem 관련
     bool addOrderItem(int orderId, int productId, int quantity, double unitPrice);
@@ -79,7 +79,6 @@ signals:
     void orderListReceived(const QJsonArray &orders);
     void orderUpdated(const QJsonObject &order);
 
-    // OrderItem 시그널들
     void orderItemAdded(const QJsonObject &orderItem);
     void orderItemUpdated(const QJsonObject &orderItem);
     void orderItemRemoved(bool success);
@@ -87,9 +86,10 @@ signals:
     void chatRoomCreated(const QJsonObject &chatRoom);
     void chatRoomJoined(const QJsonObject &chatRoom);
     void chatRoomLeft(bool success);
+    void chatRoomListReceived(const QJsonArray &rooms);
     void chatMessageSent(const QJsonObject &message);
     void chatHistoryReceived(const QJsonArray &messages);
-    void chatMessageReceived(const QJsonObject &message); // 실시간 메시지
+    void chatMessageReceived(const QJsonObject &message);
 
 private slots:
     void onConnected();
@@ -102,9 +102,9 @@ private:
     QByteArray m_buffer;
     quint32 m_expectedPacketSize;
     QString m_sessionId;
-    QString m_currentUserId;  // 로그인한 사용자 ID
+    QString m_currentUserId;
 
-    // 최근 요청 추적 (간단한 방식)
+    // 최근 요청 추적
     QString m_lastAction;
     QString m_lastTarget;
 
@@ -121,9 +121,6 @@ private:
     // 응답 처리
     void handleResponse(const QJsonObject &response);
     void handleEvent(const QJsonObject &event);
-
-    // 유틸리티
-    QJsonObject createOrderItems(const QList<QPair<int, int>>& productQuantityList);
 };
 
 #endif // CLIENTSOCKET_H
