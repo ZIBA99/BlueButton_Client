@@ -23,10 +23,14 @@ CONTR_DIR = $${SRC_DIR}/controllers
 
 SOURCES += \
     src/main.cpp \
+    src/controllers/ClientSocket.cpp \
+    src/models/entity/Entity.cpp \
+    src/models/entity/Product.cpp \
+    src/models/service/ProductManager.cpp \
     src/views/admin/AdminMainWindow.cpp \
     src/views/login/JoinMemberMainWindow.cpp \
     src/views/login/LoginMainWindow.cpp \
-    src/controllers/ClientSocket.cpp \
+    src/views/user/DoubleClickButton.cpp \
     src/views/user/ProductWidget.cpp \
     src/views/user/UserMainWindow.cpp
     # $${VIEWS_SOURCES} \
@@ -39,10 +43,15 @@ SOURCES += \
 
 
 HEADERS += \
+    src/models/entity/Entity.h \
+    src/models/entity/Product.h \
+    src/models/service/ProductManager.h \
+    src/utils/CustomErrorCodes.h \
     src/views/admin/AdminMainWindow.h \
     src/views/login/JoinMemberMainWindow.h \
     src/views/login/LoginMainWindow.h \
     src/controllers/ClientSocket.h \
+    src/views/user/DoubleClickButton.h \
     src/views/user/ProductWidget.h \
     src/views/user/UserMainWindow.h
 
