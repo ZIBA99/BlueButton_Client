@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(60, 103, 123);</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -28,7 +31,11 @@
         <font>
          <family>한컴 고딕</family>
          <pointsize>25</pointsize>
+         <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(30, 73, 93);</string>
        </property>
        <property name="text">
         <string>쇼핑몰</string>
@@ -47,7 +54,11 @@
         <font>
          <family>한컴 고딕</family>
          <pointsize>25</pointsize>
+         <bold>true</bold>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(30, 73, 93);</string>
        </property>
        <property name="text">
         <string>채팅방</string>
@@ -59,12 +70,15 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_shop">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QScrollArea" name="scrollArea_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(30, 73, 93);</string>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -99,6 +113,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(30, 73, 93);</string>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -123,6 +140,7 @@
              <property name="font">
               <font>
                <pointsize>20</pointsize>
+               <bold>true</bold>
               </font>
              </property>
              <property name="text">
@@ -158,19 +176,34 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(30, 73, 93);</string>
+           </property>
           </widget>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QPlainTextEdit" name="plainTextEdit_chat">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(30, 73, 93);</string>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(30, 73, 93);</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -181,6 +214,9 @@
              <width>300</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(30, 73, 93);</string>
            </property>
           </widget>
          </item>

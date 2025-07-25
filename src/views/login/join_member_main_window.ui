@@ -73,7 +73,7 @@
               <enum>Qt::TextFormat::MarkdownText</enum>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit">
+            <widget class="QLineEdit" name="lineEdit_id">
              <property name="minimumSize">
               <size>
                <width>200</width>
@@ -124,7 +124,7 @@
               <enum>Qt::TextFormat::MarkdownText</enum>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_2">
+            <widget class="QLineEdit" name="lineEdit_pw">
              <property name="minimumSize">
               <size>
                <width>200</width>
@@ -175,7 +175,7 @@
               <enum>Qt::TextFormat::MarkdownText</enum>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_3">
+            <widget class="QLineEdit" name="lineEdit_name">
              <property name="minimumSize">
               <size>
                <width>200</width>
@@ -226,7 +226,7 @@
               <enum>Qt::TextFormat::MarkdownText</enum>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_4">
+            <widget class="QLineEdit" name="lineEdit_email">
              <property name="minimumSize">
               <size>
                <width>200</width>
@@ -277,7 +277,7 @@
               <enum>Qt::TextFormat::MarkdownText</enum>
              </property>
             </widget>
-            <widget class="QLineEdit" name="lineEdit_5">
+            <widget class="QLineEdit" name="lineEdit_address">
              <property name="minimumSize">
               <size>
                <width>200</width>
@@ -315,41 +315,6 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QCheckBox" name="checkBox">
-           <property name="minimumSize">
-            <size>
-             <width>150</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>90</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="text">
-            <string> 회원 가입 동의</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Orientation::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Policy::Maximum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>90</width>
-             <height>30</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton_register">
            <property name="minimumSize">
             <size>
@@ -381,7 +346,7 @@
      <x>0</x>
      <y>0</y>
      <width>520</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>

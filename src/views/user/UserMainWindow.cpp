@@ -1,7 +1,5 @@
 #include "UserMainWindow.h"
 #include "ui_user_main_window.h"
-#include "LoginMainWindow.h"
-#include "ui_login_main_window.h"
 #include <QDebug>
 #include <QStandardItemModel>
 UserMainWindow::UserMainWindow(QWidget *parent)
@@ -16,6 +14,7 @@ UserMainWindow::UserMainWindow(QWidget *parent)
     // ClientSocket 초기화 및 연결
     m_client = new ClientSocket(this);
     connectServer();
+    m_login = new LoginMainWindow(this, m_client);
     model = new QStandardItemModel(this);
     ui->listView_rooms->setModel(model);
     // ImageDownloader 초기화 및 연결
@@ -34,7 +33,11 @@ UserMainWindow::UserMainWindow(QWidget *parent)
     connect(m_client, &ClientSocket::chatMessageSent, this, &UserMainWindow::onChatMessageSent);
     connect(m_client, &ClientSocket::chatHistoryReceived, this, &UserMainWindow::onChatHistoryReceived);
     connect(m_client, &ClientSocket::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived);
-
+    switchMainView(UserMainView::Shop);
+    QFont font = ui->plainTextEdit_chat->font();
+    font.bold();
+    font.setPointSize(14);
+    ui->plainTextEdit_chat->setFont(font);
 }
 
 UserMainWindow::~UserMainWindow()
@@ -151,6 +154,10 @@ void UserMainWindow::onAnyProductDoubleClicked()
     ProductWidget* pw = qobject_cast<ProductWidget*>(sender());
     if (pw) {
         id_t roomId = pw->getChatRoomId();
+        m_client->leaveChatRoom(m_currentChatRoomId, 0);
+        switchMainView(UserMainView::Chat);
+        selectChatRoomById(roomId);
+        m_client->joinChatRoom(roomId, 0);
         qDebug() << "Product double-clicked:" << roomId;
     }
 }
@@ -217,6 +224,10 @@ void UserMainWindow::onChatRoomListReceived(const QJsonArray &rooms){
         QString name = chatRoomJson.value("chatRoomName").toString();
         id_t roomId = chatRoomJson.value("chatRoomId").toInteger();
         QStandardItem* item = new QStandardItem(name);
+        QFont font = item->font();
+        font.setPointSize(20);
+        item->setFont(font);
+        item->setEditable(false);
         item->setData(roomId, Qt::UserRole + 1);
         model->appendRow(item);
 
@@ -402,10 +413,9 @@ void UserMainWindow::onChatRoomJoined(const QJsonObject &chatRoom)
     int roomId = chatRoom.value("chatRoomId").toInt();
     QString roomName = chatRoom.value("chatRoomName").toString();
 
-    qDebug() <<QString("✅ 채팅방 참여 완료 - ID: %1, 이름: %2")
-                      .arg(roomId).arg(roomName);
+    qDebug() <<QString("✅ 채팅방 참여 완료 - ID: %1, 이름: %2").arg(roomId).arg(roomName);
     m_currentChatRoomId = roomId;
-    ui->plainTextEdit_chat->clear();
+    // ui->plainTextEdit_chat->clear();
     m_client->requestChatHistory(roomId);
 }
 
@@ -423,22 +433,26 @@ void UserMainWindow::onChatMessageSent(const QJsonObject &message)
     int chatId = message.value("chatId").toInt();
     QString chatStr = message.value("chatStr").toString();
 
-    qDebug() <<QString("✅ 메시지 전송 완료 - ID: %1, 내용: %2")
-                      .arg(chatId).arg(chatStr);
+    qDebug() <<QString("✅ 메시지 전송 완료 - ID: %1, 내용: %2").arg(chatId).arg(chatStr);
 
     m_client->requestChatHistory(m_currentChatRoomId);
+    ui->lineEdit->clear();
 }
 
 void UserMainWindow::onChatHistoryReceived(const QJsonArray &messages)
 {
     qDebug() <<QString("💬 채팅 기록 수신 (%1개):").arg(messages.size());
 
+    ui->plainTextEdit_chat->clear();
+
+    ui->plainTextEdit_chat->appendPlainText(QString("환영합니다!!!"));
     for (const QJsonValue &value : messages) {
         QJsonObject message = value.toObject();
         int userId = message.value("userId").toInt();
+        QString userName = message.value("userName").toString();
         QString chatStr = message.value("chatStr").toString();
         QString chatTime = message.value("chatTime").toString();
-        QString chatlog = QString("  - [%1] %2: %3").arg(chatTime).arg(userId).arg(chatStr);
+        QString chatlog = QString("[%1]: %2").arg(userName).arg(chatStr);
         qDebug() << chatlog;
         ui->plainTextEdit_chat->appendPlainText(chatlog);
     }
@@ -446,10 +460,9 @@ void UserMainWindow::onChatHistoryReceived(const QJsonArray &messages)
 
 void UserMainWindow::onChatMessageReceived(const QJsonObject &message)
 {
-    int userId = message.value("userId").toInt();
+    QString userName = message.value("userName").toString();
     QString chatStr = message.value("chatStr").toString();
-    QString chatTime = message.value("chatTime").toString();
-    QString chatlog = QString("  - [%1] %2: %3").arg(chatTime).arg(userId).arg(chatStr);
+    QString chatlog = QString("[%1]: %2").arg(userName).arg(chatStr);
     qDebug() << chatlog;
     ui->plainTextEdit_chat->appendPlainText(chatlog);
 }

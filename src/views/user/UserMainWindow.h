@@ -14,6 +14,8 @@
 #include "src/controllers/ClientSocket.h"
 #include "src/controllers/ImageDownloader.h"  // 추가
 #include <QStandardItemModel>
+#include "LoginMainWindow.h"
+#include "ui_login_main_window.h"
 
 enum class UserMainView {
     Shop = 0,
@@ -64,6 +66,7 @@ private slots:
 
 private:
     Ui::UserMainWindow *ui;
+    LoginMainWindow *m_login;
     QVector<ProductWidget*> productWidgets;
     ClientSocket *m_client;
     ImageDownloader *m_imageDownloader;  // 추가
