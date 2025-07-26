@@ -61,8 +61,10 @@ private slots:
     void onChatMessageSent(const QJsonObject &message);
     void onChatHistoryReceived(const QJsonArray &messages);
     void onChatMessageReceived(const QJsonObject &message);
+    void requestChatRoomJoin(id_t roomId);
 
     void on_lineEdit_editingFinished();
+    void onErrorOccurred(const QString &error);
 
 private:
     Ui::UserMainWindow *ui;

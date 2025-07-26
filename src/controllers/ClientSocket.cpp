@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QUuid>
-
+#include <QThread>
 ClientSocket::ClientSocket(QObject *parent)
     : QObject(parent)
     , m_socket(new QTcpSocket(this))
@@ -416,7 +416,7 @@ bool ClientSocket::sendMessage(const QJsonObject &message)
     } else {
         emit errorOccurred("Failed to send message");
     }
-
+    QThread::msleep(100);
     return success;
 }
 

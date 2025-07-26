@@ -33,6 +33,8 @@ UserMainWindow::UserMainWindow(QWidget *parent)
     connect(m_client, &ClientSocket::chatMessageSent, this, &UserMainWindow::onChatMessageSent);
     connect(m_client, &ClientSocket::chatHistoryReceived, this, &UserMainWindow::onChatHistoryReceived);
     connect(m_client, &ClientSocket::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived);
+    connect(m_client, &ClientSocket::errorOccurred, this, &UserMainWindow::onErrorOccurred);
+
     switchMainView(UserMainView::Shop);
     QFont font = ui->plainTextEdit_chat->font();
     font.bold();
@@ -391,13 +393,28 @@ void UserMainWindow::selectChatRoomById(id_t roomIdToSelect) {
 
 void UserMainWindow::onChatRoomClicked(const QModelIndex& index) {
     QString roomName = index.data(Qt::DisplayRole).toString();
-    m_client->leaveChatRoom(m_currentChatRoomId, 0);
+    if(m_currentChatRoomId>0){
+        m_client->leaveChatRoom(m_currentChatRoomId, 0);
+    }
+
     id_t roomId = index.data(Qt::UserRole+1).toInt();
+    m_currentChatRoomId = roomId;
     qDebug() << "채팅방 선택됨:" << roomName << "(" << roomId << ")";
+    m_client->leaveChatRoom(roomId, 0);
 
     qDebug() << "채팅방 열기:" << roomName;
     switchMainView(UserMainView::Chat);
-    selectChatRoomById(roomId);
+    // selectChatRoomById(roomId);
+    m_client->joinChatRoom(roomId, 0);
+}
+
+
+void UserMainWindow::requestChatRoomJoin(id_t roomId) {
+    if(m_currentChatRoomId>0){
+        m_client->leaveChatRoom(m_currentChatRoomId, 0);
+    }
+    m_currentChatRoomId = roomId;
+    // selectChatRoomById(roomId);
     m_client->joinChatRoom(roomId, 0);
 }
 
@@ -406,15 +423,19 @@ void UserMainWindow::openChatRoom(const QString& roomName) {
     // 예: QWidget을 띄우거나 데이터 로딩 등
 }
 
-
-
 void UserMainWindow::onChatRoomJoined(const QJsonObject &chatRoom)
 {
+    qDebug() << "Debug :: chatRoom "<< chatRoom;
+    if(chatRoom.empty()){
+        qDebug() << "charRoom empty";
+        qDebug() <<QString("❌ 채팅방 참여 실패!");
+        requestChatRoomJoin(m_currentChatRoomId);
+        return;
+    }
     int roomId = chatRoom.value("chatRoomId").toInt();
     QString roomName = chatRoom.value("chatRoomName").toString();
 
     qDebug() <<QString("✅ 채팅방 참여 완료 - ID: %1, 이름: %2").arg(roomId).arg(roomName);
-    m_currentChatRoomId = roomId;
     // ui->plainTextEdit_chat->clear();
     m_client->requestChatHistory(roomId);
 }
@@ -453,6 +474,7 @@ void UserMainWindow::onChatHistoryReceived(const QJsonArray &messages)
         QString chatStr = message.value("chatStr").toString();
         QString chatTime = message.value("chatTime").toString();
         QString chatlog = QString("[%1]: %2").arg(userName).arg(chatStr);
+        qDebug() << "json Debug ||| " << messages;
         qDebug() << chatlog;
         ui->plainTextEdit_chat->appendPlainText(chatlog);
     }
@@ -473,3 +495,7 @@ void UserMainWindow::on_lineEdit_editingFinished()
     m_client->sendChatMessage(m_currentChatRoomId,chatText);
 }
 
+void UserMainWindow::onErrorOccurred(const QString &error)
+{
+    qDebug() << QString("⚠️ 오류: %1").arg(error);
+}
