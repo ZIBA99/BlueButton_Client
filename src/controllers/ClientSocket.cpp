@@ -416,7 +416,7 @@ bool ClientSocket::sendMessage(const QJsonObject &message)
     } else {
         emit errorOccurred("Failed to send message");
     }
-    QThread::msleep(100);
+    // QThread::msleep(100);
     return success;
 }
 
