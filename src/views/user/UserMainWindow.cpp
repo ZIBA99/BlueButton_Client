@@ -35,11 +35,12 @@ UserMainWindow::UserMainWindow(QWidget *parent)
     connect(m_client, &ClientSocket::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived);
     connect(m_client, &ClientSocket::errorOccurred, this, &UserMainWindow::onErrorOccurred);
 
-    switchMainView(UserMainView::Shop);
+
     QFont font = ui->plainTextEdit_chat->font();
     font.bold();
     font.setPointSize(14);
     ui->plainTextEdit_chat->setFont(font);
+    switchMainView(UserMainView::Shop);
 }
 
 UserMainWindow::~UserMainWindow()
@@ -365,6 +366,66 @@ void UserMainWindow::onImageDownloadProgress(int requestId, qint64 bytesReceived
 void UserMainWindow::switchMainView(UserMainView view)
 {
     ui->stackedWidget->setCurrentIndex(static_cast<int>(view));
+    QRect shop_geo = ui->pushButton_shop->geometry();
+    QRect chat_geo = ui->pushButton_chat->geometry();
+    if(view == UserMainView::Shop){
+        ui->pushButton_shop->setStyleSheet(QString("QPushButton{ \
+                                                        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \
+                                                                stop:0 #7fdbda, stop:1 #5fb3b3); \
+                                                        color: #1a1a1a; \
+                                                        border-radius: 20px; \
+                                                        padding: 10px 20px; \
+                                                        max-width: 1040px; \
+                                                    }"
+                                                   ));
+        ui->pushButton_chat->setStyleSheet(QString("QPushButton{ \
+                                                        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \
+                                                                stop:0 #a8edea, stop:1 #7dd3fc); \
+                                                        color: #1a1a1a; \
+                                                        border-radius: 20px; \
+                                                        padding: 10px 20px; \
+                                                        max-width: 400px; \
+                                                    }"
+                                                   ));
+
+
+        // chat_geo.setX(shop_geo.left()+1040+10);
+        // shop_geo.setWidth(1040);
+        // chat_geo.setWidth(400);
+
+        // ui->pushButton_shop->setGeometry(shop_geo);
+        // ui->pushButton_chat->setGeometry(chat_geo);
+        // ui->pushButton_shop->hasFocus();
+    }else if(view == UserMainView::Chat){
+
+        ui->pushButton_chat->setStyleSheet(QString("QPushButton{ \
+                                                        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \
+                                                                stop:0 #7fdbda, stop:1 #5fb3b3); \
+                                                        color: #1a1a1a; \
+                                                        font-weight: bold; \
+                                                        border-radius: 20px; \
+                                                        padding: 10px 20px; \
+                                                        max-width: 1040px; \
+                                                    }"
+                                                   ));
+        ui->pushButton_shop->setStyleSheet(QString("QPushButton{ \
+                                                        background: qlineargradient(x1:0, y1:0, x2:1, y2:1, \
+                                                                stop:0 #a8edea, stop:1 #7dd3fc); \
+                                                        color: #1a1a1a; \
+                                                        border-radius: 20px; \
+                                                        padding: 10px 20px; \
+                                                        max-width: 400px; \
+                                                    }"
+                                                   ));
+
+
+        // chat_geo.setX(shop_geo.left()+400+10);
+        // shop_geo.setWidth(400);
+        // chat_geo.setWidth(1040);
+        // ui->pushButton_shop->setGeometry(shop_geo);
+        // ui->pushButton_chat->setGeometry(chat_geo);
+        // ui->pushButton_chat->hasFocus();
+    }
 }
 
 void UserMainWindow::on_pushButton_shop_clicked()

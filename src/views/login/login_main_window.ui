@@ -25,6 +25,13 @@
   <property name="windowTitle">
    <string>LoginMainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #1a1a1a;
+color: #7fdbda;
+border-radius: 10px;
+border: none;
+padding: 0px 0px;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -161,6 +168,13 @@
                  <height>20</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 10px;
+border: none;
+padding: 0px 0px;</string>
+               </property>
               </widget>
              </widget>
              <widget class="QSplitter" name="splitter_2">
@@ -221,6 +235,22 @@
                  <height>20</height>
                 </size>
                </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 10px;
+border: none;
+padding: 0px 0px;</string>
+               </property>
+               <property name="inputMethodHints">
+                <set>Qt::InputMethodHint::ImhHiddenText|Qt::InputMethodHint::ImhNoAutoUppercase|Qt::InputMethodHint::ImhNoPredictiveText|Qt::InputMethodHint::ImhSensitiveData</set>
+               </property>
+               <property name="echoMode">
+                <enum>QLineEdit::EchoMode::Password</enum>
+               </property>
               </widget>
              </widget>
             </widget>
@@ -243,6 +273,13 @@
                 <height>40</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 10px;
+border: none;
+padding: 0px 0px;</string>
+              </property>
               <property name="text">
                <string>로그인</string>
               </property>
@@ -253,6 +290,13 @@
                 <width>0</width>
                 <height>40</height>
                </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 10px;
+border: none;
+padding: 0px 0px;</string>
               </property>
               <property name="text">
                <string>회원 가입</string>
