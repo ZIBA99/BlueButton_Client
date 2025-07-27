@@ -2,6 +2,7 @@
 #include "ui_user_main_window.h"
 #include <QDebug>
 #include <QStandardItemModel>
+#include <QImageReader>
 UserMainWindow::UserMainWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UserMainWindow)
@@ -22,10 +23,8 @@ UserMainWindow::UserMainWindow(QWidget *parent)
     connectImageDownloader();
 
     // 제품 목록 요청
-    m_client->requestProductList();
-    m_client->requestChatRoomList();
-    connect(m_client, &ClientSocket::productListReceived, this, &UserMainWindow::onProductListReceived);
     connect(m_client, &ClientSocket::chatRoomListReceived, this, &UserMainWindow::onChatRoomListReceived);
+    connect(m_client, &ClientSocket::productListReceived, this, &UserMainWindow::onProductListReceived);
     connect(ui->listView_rooms, &QListView::clicked, this, &UserMainWindow::onChatRoomClicked);
 
     connect(m_client, &ClientSocket::chatRoomJoined, this, &UserMainWindow::onChatRoomJoined);
@@ -36,11 +35,23 @@ UserMainWindow::UserMainWindow(QWidget *parent)
     connect(m_client, &ClientSocket::errorOccurred, this, &UserMainWindow::onErrorOccurred);
 
 
+
     QFont font = ui->plainTextEdit_chat->font();
     font.bold();
     font.setPointSize(14);
     ui->plainTextEdit_chat->setFont(font);
     switchMainView(UserMainView::Shop);
+    // while(model->rowCount()<=0){
+    //     m_client->requestChatRoomList();
+    //     QThread::sleep(1);
+    // }
+    show();
+    on_pushButton_chat_clicked();
+    switchMainView(UserMainView::Shop);
+    m_client->requestProductList();
+    // m_client->requestChatRoomList();
+    // m_client->requestProductList();
+
 }
 
 UserMainWindow::~UserMainWindow()
@@ -205,6 +216,26 @@ void UserMainWindow::onProductListReceived(const QJsonArray &products)
                         .arg(price)
                         .arg(stock)
                         .arg(imageFileName.isEmpty() ? "없음" : imageFileName);
+
+        if(model->rowCount() <= 0){
+            qDebug() << "ProductList: Chat model is empty!! ";
+        }
+        QModelIndexList indexes = model->match(
+            model->index(0, 0),              // 시작 인덱스
+            Qt::UserRole + 1,                // 검색할 Role
+            roomId,                     // 검색할 값
+            -1,                              // 모든 매칭 (-1 = 전체)
+            Qt::MatchRecursive               // 재귀적 검색
+        );
+
+        // 찾은 모든 아이템에 UserRole+2 설정
+        for (const QModelIndex &index : indexes) {
+            QStandardItem *item = model->itemFromIndex(index);
+            if (item) {
+                item->setData(imageFileName, Qt::UserRole + 2);
+                qDebug() << "Set ProductImage for ChatView : " << imageFileName;
+            }
+        }
         count++;
     }
 
@@ -215,7 +246,68 @@ void UserMainWindow::onProductListReceived(const QJsonArray &products)
     downloadProductImages();
 }
 
+void UserMainWindow::setProductImage(const QString &imagePath)
+{
+    QFileInfo fileInfo(imagePath);
+    if (!fileInfo.exists()) {
+        qDebug() << "UserMainWindow: Image file not found:" << imagePath;
+        return;
+    }
 
+    if (fileInfo.size() == 0) {
+        qDebug() << "UserMainWindow: Image file is empty:" << imagePath;
+        return;
+    }
+
+    // 이미지 로딩 시도
+    QPixmap pixmap;
+
+    if (loadImageWithReader(imagePath, pixmap)) {
+        setPixmapToButton(pixmap, imagePath);
+        return;
+    }
+}
+
+bool UserMainWindow::loadImageWithReader(const QString &imagePath, QPixmap &pixmap)
+{
+    QImageReader reader(imagePath);
+
+    // 지원되는 형식 확인
+    if (!reader.canRead()) {
+        qDebug() << "QImageReader cannot read:" << imagePath;
+        qDebug() << "Detected format:" << reader.format();
+        qDebug() << "Error:" << reader.errorString();
+        return false;
+    }
+
+    // 이미지 크기 제한 (메모리 보호)
+    QSize imageSize = reader.size();
+    if (imageSize.width() > 2000 || imageSize.height() > 2000) {
+        reader.setScaledSize(QSize(500, 500));
+        qDebug() << "Large image scaled down:" << imageSize;
+    }
+
+    // 이미지 읽기
+    QImage image = reader.read();
+    if (image.isNull()) {
+        qDebug() << "QImageReader failed to read image:" << reader.errorString();
+        return false;
+    }
+
+    pixmap = QPixmap::fromImage(image);
+    qDebug() << "Successfully loaded with QImageReader:" << imagePath;
+    return true;
+}
+
+
+void UserMainWindow::setPixmapToButton(const QPixmap &pixmap, const QString &imagePath)
+{
+    ui->label_prodcutImage->setPixmap(pixmap);
+    ui->label_prodcutImage->setText("");
+
+    qDebug() << "UserMainWindow: Image set successfully:" << imagePath
+             << "Original size:" << pixmap.size();
+}
 
 void UserMainWindow::onChatRoomListReceived(const QJsonArray &rooms){
 
@@ -228,12 +320,11 @@ void UserMainWindow::onChatRoomListReceived(const QJsonArray &rooms){
         id_t roomId = chatRoomJson.value("chatRoomId").toInteger();
         QStandardItem* item = new QStandardItem(name);
         QFont font = item->font();
-        font.setPointSize(20);
+        font.setPointSize(16);
         item->setFont(font);
         item->setEditable(false);
         item->setData(roomId, Qt::UserRole + 1);
         model->appendRow(item);
-
     }
 }
 
@@ -430,11 +521,20 @@ void UserMainWindow::switchMainView(UserMainView view)
 
 void UserMainWindow::on_pushButton_shop_clicked()
 {
+
+    if(ui->layout_productList->count()<=0){
+        m_client->requestProductList();
+    }
     switchMainView(UserMainView::Shop);
 }
 
 void UserMainWindow::on_pushButton_chat_clicked()
 {
+    if(model->rowCount()<=0){
+        model->clear();
+        m_client->requestChatRoomList();
+    }
+
     switchMainView(UserMainView::Chat);
 }
 
@@ -445,8 +545,15 @@ void UserMainWindow::selectChatRoomById(id_t roomIdToSelect) {
 
         if (roomId == roomIdToSelect) {
             QModelIndex index = model->indexFromItem(item);
+            QString imagePath = item->data(Qt::UserRole + 2).toString();
+            qDebug() << QString("selectChatRoomById : roomId(%1), image(%2)").arg(roomId).arg(imagePath);
             ui->listView_rooms->setCurrentIndex(index);  // 현재 선택
             ui->listView_rooms->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+
+            // 채팅방 선택 되면 정보 업데이트
+            setProductImage(imagePath);
+
+
             break;
         }
     }

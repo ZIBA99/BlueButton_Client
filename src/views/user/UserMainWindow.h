@@ -88,6 +88,10 @@ private:
     void updateProductImage(ProductWidget* widget, const QString &imagePath);  // 추가
     void selectChatRoomById(id_t roomIdToSelect);
 
+    void setProductImage(const QString &imagePath);
+    bool loadImageWithReader(const QString &imagePath, QPixmap &pixmap);
+    void setPixmapToButton(const QPixmap &pixmap, const QString &imagePath);
+
     QWidget* findWidgetByName(const QString& name)
     {
         // 전역에서 위젯 찾기 로직

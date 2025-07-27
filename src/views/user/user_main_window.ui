@@ -151,8 +151,8 @@ padding: 10px 20px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1037</width>
-            <height>849</height>
+            <width>24</width>
+            <height>24</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -192,8 +192,8 @@ padding: 10px 20px;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>310</width>
-            <height>849</height>
+            <width>293</width>
+            <height>81</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -245,9 +245,9 @@ padding: 10px 20px;</string>
        <string notr="true">    background-color: #1a1a1a;
     color: #a8edea;</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QListView" name="listView_rooms">
            <property name="minimumSize">
@@ -336,8 +336,9 @@ padding: 10px 20px;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(50, 93, 113);
-border-radius: 20px;
+              <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 10px;
 border: none;
 padding: 10px 20px;</string>
              </property>
@@ -346,27 +347,69 @@ padding: 10px 20px;</string>
           </layout>
          </item>
          <item>
-          <widget class="QListView" name="listView_users">
-           <property name="minimumSize">
-            <size>
-             <width>500</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>1000</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: #2d2d2d;
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_prodcutImage">
+               <property name="maximumSize">
+                <size>
+                 <width>220</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #2d2d2d;
 color: #7fdbda;
 border-radius: 20px;
 border: none;
 padding: 10px 20px;</string>
-           </property>
-          </widget>
+               </property>
+               <property name="text">
+                <string>Product Image</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_productInfo">
+               <property name="styleSheet">
+                <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+               </property>
+               <property name="text">
+                <string>Product Info</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QListView" name="listView_productDesc">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>1000</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
