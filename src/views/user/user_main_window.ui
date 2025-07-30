@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UserMainWindow</class>
+ <widget class="QWidget" name="UserMainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1478</width>
+    <height>1042</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">    background-color: #1a1a1a;
+    color: #7fdbda;</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="topMargin">
+    <number>11</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_shop">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>한컴 고딕</family>
+         <pointsize>25</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+            stop:0 #7fdbda, stop:1 #5fb3b3);
+    color: #1a1a1a;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px;
+}
+
+QPushButton:pressed {
+    padding: 12px 22px;
+    background-color: #357abd;
+}</string>
+       </property>
+       <property name="text">
+        <string>쇼핑몰</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_chat">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>한컴 고딕</family>
+         <pointsize>25</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+QPushButton{
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+            stop:0 #a8edea, stop:1 #7dd3fc);
+	color: #1a1a1a;
+	border-radius: 20px;
+	border: none;
+	padding: 10px 20px;
+}
+
+QPushButton:pressed {
+    padding: 12px 22px;
+    background-color: #357abd;
+}</string>
+       </property>
+       <property name="text">
+        <string>채팅방</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="styleSheet">
+      <string notr="true">    background-color: #1a1a1a;
+    color: #7fdbda;</string>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="page_shop">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>24</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QGridLayout" name="layout_productList"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="minimumSize">
+          <size>
+           <width>350</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>350</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>293</width>
+            <height>81</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QPushButton" name="pushButton_3">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+            stop:0 #7fdbda, stop:1 #5fb3b3);
+color: #1a1a1a;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+             </property>
+             <property name="text">
+              <string>구매</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="layout_cartList">
+             <property name="sizeConstraint">
+              <enum>QLayout::SizeConstraint::SetFixedSize</enum>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_chat">
+      <property name="styleSheet">
+       <string notr="true">    background-color: #1a1a1a;
+    color: #a8edea;</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QListView" name="listView_rooms">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QListView {
+	background-color: #2d2d2d;
+	color: #7fdbda;
+	border-radius: 20px;
+	padding: 10px 20px;
+	outline: none;  
+}
+
+QListView::item {
+    background-color: transparent;
+    color: #495057;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 2px;
+}
+
+QListView::item:selected {
+    background-color: #5fb3b3;  /* 파란색 배경 */
+    color: white;               /* 흰색 텍스트 */
+}
+
+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPlainTextEdit" name="plainTextEdit_chat">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>800</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>800</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 10px;
+border: none;
+padding: 10px 20px;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_prodcutImage">
+               <property name="maximumSize">
+                <size>
+                 <width>220</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+               </property>
+               <property name="text">
+                <string>Product Image</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_productInfo">
+               <property name="styleSheet">
+                <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+               </property>
+               <property name="text">
+                <string>Product Info</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QListView" name="listView_productDesc">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>1000</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #2d2d2d;
+color: #7fdbda;
+border-radius: 20px;
+border: none;
+padding: 10px 20px;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

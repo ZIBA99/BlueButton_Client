@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,51 +21,21 @@ VIEWS_DIR = $${SRC_DIR}/views
 CONTR_DIR = $${SRC_DIR}/controllers
 
 
-# ====================== views
-VIEWS_SOURCES += \
-    $${VIEWS_DIR}/mainwindow.cpp
-    # $${VIEWS_DIR}/test.cpp
-
-VIEWS_HEADERS += \
-    $${VIEWS_DIR}/mainwindow.h
-    # $${VIEWS_DIR}/test.h
-
-# ====================== models
-
-# MODEL_SOURCES += \
-#     $${MODEL_DIR}/*.cpp \
-#     $${MODEL_DIR}/entity/*.cpp \
-#     $${MODEL_DIR}/repository/*.cpp \
-#     $${MODEL_DIR}/service/*.cpp
-
-# MODEL_HEADERS += \
-#     $${MODEL_DIR}/*.h \
-#     $${MODEL_DIR}/entity/*.h \
-#     $${MODEL_DIR}/repository/*.h \
-#     $${MODEL_DIR}/service/*.h
-
-# ====================== contorllers
-# CONTR_HEADERS += \
-#     $${CONTR_DIR}/*.cpp
-
-# CONTR_SOURCES += \
-#     $${CONTR_DIR}/*.cpp
-
-
-# ============================================= for utils source
-# UTILS_DIR = $${SRC_DIR}/utils
-
-# UTILS_SOURCES += \
-#     $${UTILS_DIR}/*.cpp
-
-# UTILS_HEADERS += \
-#     $${UTILS_DIR}/*.h
-
-# ============================================= add all sources
-
 SOURCES += \
-    $${SRC_DIR}/main.cpp \
-    $${VIEWS_SOURCES}
+    src/controllers/FileTransfer.cpp \
+    src/controllers/ImageDownloader.cpp \
+    src/main.cpp \
+    src/controllers/ClientSocket.cpp \
+    src/models/entity/Entity.cpp \
+    src/models/entity/Product.cpp \
+    src/models/service/ProductManager.cpp \
+    src/views/admin/AdminMainWindow.cpp \
+    src/views/login/JoinMemberMainWindow.cpp \
+    src/views/login/LoginMainWindow.cpp \
+    src/views/user/DoubleClickButton.cpp \
+    src/views/user/ProductWidget.cpp \
+    src/views/user/UserMainWindow.cpp
+    # $${VIEWS_SOURCES} \
     # $${MODEL_DIR}/*.cpp \
     # $${MODEL_DIR}/entity/*.cpp \
     # $${MODEL_DIR}/repository/*.cpp \
@@ -73,15 +43,37 @@ SOURCES += \
     # $${UTILS_DIR}/*.cpp \
     # $${CONTR_DIR}/*.cpp
 
+
 HEADERS += \
-    $${VIEWS_HEADERS}
+    src/controllers/FileTransfer.h \
+    src/controllers/ImageDownloader.h \
+    src/models/entity/Entity.h \
+    src/models/entity/Product.h \
+    src/models/service/ProductManager.h \
+    src/utils/CustomErrorCodes.h \
+    src/views/admin/AdminMainWindow.h \
+    src/views/login/JoinMemberMainWindow.h \
+    src/views/login/LoginMainWindow.h \
+    src/controllers/ClientSocket.h \
+    src/views/user/DoubleClickButton.h \
+    src/views/user/ProductWidget.h \
+    src/views/user/UserMainWindow.h
+
 
 INCLUDEPATH += \
-    $${VIEWS_DIR}
+    $${SRC_DIR} \
+    $${VIEWS_DIR} \
+    $${VIEWS_DIR}/login \
+    $${VIEWS_DIR}/user \
+    $${VIEWS_DIR}/admin
 
 
 FORMS += \
-    $${CUI_DIR}/mainwindow.ui
+    src/views/user/product_widget.ui \
+    src/views/admin/admin_main_window.ui \
+    src/views/user/user_main_window.ui \
+    src/views/login/join_member_main_window.ui \
+    src/views/login/login_main_window.ui
 
 TRANSLATIONS += \
     $${TR_DIR}/Client_UI_en_US.ts

@@ -1,4 +1,8 @@
-#include "mainwindow.h"
+#include "JoinMemberMainWindow.h"
+#include "LoginMainWindow.h"
+#include "UserMainWindow.h"
+// #include "AdminMainWindow.h"
+
 
 #include <QApplication>
 #include <QLocale>
@@ -17,7 +21,30 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow w;
-    w.show();
+
+    // //아래는 Layout
+    // LoginMainWindow l;  // mainwindow.h에 정의된 클래스
+    UserMainWindow u;   // mainuser.h에 정의된 클래스
+    // AdminMainWindow ad;
+
+
+    // //아래는 Layout
+    // l.show();
+    u.show();
+    // ad.show();
+    // j.show();
+
+    // //User Widgets
+    // userP.show();
+    // userEIA.show();
+    // userEC.show();
+    // userSH.show();
+    // userPC.show();
+
+    // //Admin Widgets
+    // AdminCM.show();
+    // AdminCI.show();
+    // AdminGIM.show();
+
     return a.exec();
 }
